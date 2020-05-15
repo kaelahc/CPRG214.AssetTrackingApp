@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPRG214.Assets.Data\CPRG214.Assets.Data.csproj" />
+    <ProjectReference Include="..\CPRG214.Assets.Domain\CPRG214.Assets.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
