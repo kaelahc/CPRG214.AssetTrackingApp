@@ -4,7 +4,9 @@
 
 <h3>Search Assets</h3>
 
-<select id="uxAssetTypes" asp-items="ViewBag.AssetTypeID"></select>
+<div>
+    <select id="uxAssetTypes" asp-items="ViewBag.AssetTypeID"></select>
+</div>
 
 <div id="uxDisplay">
     @await Component.InvokeAsync("AssetsByType", 0)

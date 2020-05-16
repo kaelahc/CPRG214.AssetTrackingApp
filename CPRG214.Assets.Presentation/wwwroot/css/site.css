@@ -5,11 +5,23 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  font-weight: 600;
+}
+
+nav {
+    background-color: lightskyblue;
+    font-size: large;
+    font-weight: 500;
+}
+
+#homeImg{
+    width: 75%;
+    height: auto;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: midnightblue;
 }
 
 .btn-primary {
@@ -63,6 +75,7 @@ body {
   margin-bottom: 60px;
 }
 .footer {
+  background-color: lightskyblue;
   position: absolute;
   bottom: 0;
   width: 100%;
