@@ -8,7 +8,7 @@ namespace CPRG214.Assets.BLL
 {
     public class AssetsManager
     {
-        public static List<Domain.Asset> GetAll()
+        public static IList<Asset> GetAll()
         {
             var context = new AssetContext();
             var assets = context.Assets.Include(a => a.AssetType).ToList();
@@ -22,10 +22,17 @@ namespace CPRG214.Assets.BLL
             context.SaveChanges();
         }
 
+        public static Asset Find(int id)
+        {
+            var context = new AssetContext();
+            var asset = context.Assets.Find(id);
+            return asset;
+        }
+
         public static void Update(Asset asset)
         {
             var context = new AssetContext();
-            var originalAsset = context.Assets.Find(asset);
+            var originalAsset = context.Assets.Find(asset.Id);
             originalAsset.TagNumber = asset.TagNumber;
             originalAsset.AssetTypeId = asset.AssetTypeId;
             originalAsset.Manufacturer = asset.Manufacturer;
@@ -35,11 +42,11 @@ namespace CPRG214.Assets.BLL
             context.SaveChanges();
         }
 
-        public static List<Domain.Asset> GetAllByAssetType(int id)
+        public static IList<Asset> GetAllByAssetType(int id)
         {
             var context = new AssetContext();
             var assets = context.Assets.
-                Where(a => a.Id == id).
+                Where(a => a.AssetTypeId == id).
                 Include(t => t.AssetType).ToList();
             return assets;
         }

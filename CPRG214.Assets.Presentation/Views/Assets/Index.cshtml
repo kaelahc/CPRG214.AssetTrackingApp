@@ -4,7 +4,7 @@
     ViewData["Title"] = "Assets";
 }
 
-<h1>List of Assets</h1>
+<h3>List of Assets</h3>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -28,25 +28,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AssetType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TagNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNumber)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
-                @Html.ActionLink("Details", "Details", new {id=item.Id})
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssetType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TagNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //alert('loaded')
+        });
+    </script>
+}

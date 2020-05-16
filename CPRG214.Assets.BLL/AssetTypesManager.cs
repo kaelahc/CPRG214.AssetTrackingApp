@@ -8,7 +8,7 @@ namespace CPRG214.Assets.BLL
 {
     public class AssetTypesManager
     {
-        public static List<AssetType> GetAssetTypes()
+        public static IList<AssetType> GetAssetTypes()
         {
             var context = new AssetContext();
             var assetTypes = context.AssetTypes.OrderBy(t => t.Name).ToList();
@@ -20,6 +20,13 @@ namespace CPRG214.Assets.BLL
             var context = new AssetContext();
             context.AssetTypes.Add(type);
             context.SaveChanges();
+        }
+
+        public static AssetType Find(int id)
+        {
+            var context = new AssetContext();
+            var assetType = context.AssetTypes.Find(id);
+            return assetType;
         }
 
         public static void Update(AssetType assetType)

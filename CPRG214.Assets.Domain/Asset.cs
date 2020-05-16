@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CPRG214.Assets.Domain
 {
@@ -12,7 +13,7 @@ namespace CPRG214.Assets.Domain
         [Display(Name = "Asset Type")] [Required] public int AssetTypeId { get; set; }
         [Required] public string Manufacturer { get; set; }
 
-        public string? Model { get; set; }
+        [AllowNull] public string? Model { get; set; }
         [Required] public string Description { get; set; }
         [Display(Name = "Serial Number")] [Required] public string SerialNumber { get; set; }
 

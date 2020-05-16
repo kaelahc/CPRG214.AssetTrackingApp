@@ -3,15 +3,16 @@ using CPRG214.Assets.BLL;
 using CPRG214.Assets.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 using System.Linq;
 
 namespace CPRG214.Assets.AssetTracking.Controllers
 {
     public class AssetsController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            var assets = BLL.AssetsManager.GetAll();
+            var assets = AssetsManager.GetAll();
             var viewModels = assets.Select(a => new AssetViewModel
             {
                 Id = a.Id,
@@ -23,17 +24,21 @@ namespace CPRG214.Assets.AssetTracking.Controllers
             return View(viewModels);
         }
 
-        public IActionResult Create()
+        public IActionResult GetAssetsByType(int id)
         {
-            var assetTypes = AssetTypesManager.GetAsKeyValuePairs();
-            var list = new SelectList(assetTypes, "Value", "Text");
-            ViewBag.AssetTypeList = list;
+            return ViewComponent("AssetsByType", id);
+        }
+
+        public ActionResult Create()
+        {
+            ViewBag.AssetTypeId = GetAssetTypes();
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Asset asset)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Asset asset)
         {
             try
             {
@@ -42,14 +47,60 @@ namespace CPRG214.Assets.AssetTracking.Controllers
             }
             catch
             {
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Assets/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var asset = AssetsManager.Find(id);
+            ViewBag.AssetTypeId = GetAssetTypes();
+            return View(asset);
+        }
+
+        // POST: Assets/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Asset asset)
+        {
+            try
+            {
+                AssetsManager.Update(asset);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
                 return View();
             }
         }
 
-        public IActionResult GetAssetsByType(int id)
+        public IEnumerable GetAssetTypes()
         {
-            return ViewComponent("AssetsByType", id);
+            var assetTypes = AssetTypesManager.GetAsKeyValuePairs();
+            var types = new SelectList(assetTypes, "Value", "Text");
+
+            var list = types.ToList();
+            list.Insert(0, new SelectListItem { 
+                Text = "All Types",
+                Value = "0"
+            });
+
+            return list;
         }
 
+        public IActionResult Search()
+        {
+            ViewBag.AssetTypeId = GetAssetTypes();
+            return View();
+        }
+
+        public IActionResult Assets(int id)
+        {
+            var filteredAssets = AssetsManager.GetAllByAssetType(id);
+            var result = $"Asset count: {filteredAssets.Count}";
+            return Content(result);
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace CPRG214.Assets.AssetTracking.Controllers
         // GET: AssetTypes
         public ActionResult Index()
         {
-            return View();
+            var assetType = AssetTypesManager.GetAssetTypes();
+            return View(assetType);
         }
 
         // GET: AssetTypes/Create
@@ -38,17 +39,18 @@ namespace CPRG214.Assets.AssetTracking.Controllers
         // GET: AssetTypes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var assetType = AssetTypesManager.Find(id);
+            return View(assetType);
         }
 
         // POST: AssetTypes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AssetType type)
+        public ActionResult Edit(AssetType type)
         {
             try
             {
-                // TODO: Add update logic here
+                AssetTypesManager.Update(type);
 
                 return RedirectToAction(nameof(Index));
             }
